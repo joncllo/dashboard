@@ -1,7 +1,15 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 const route = useRoute()
 const appConfig = useAppConfig()
 const { isHelpSlideoverOpen } = useDashboard()
+
+let isNavbarVisible = ref(true);
+
+function toggleNavbar() {
+  isNavbarVisible.value = !isNavbarVisible.value;
+}
 
 const links = [{
   id: 'home',
@@ -34,6 +42,26 @@ const links = [{
 }, {
   id: 'settings',
   label: 'Settings',
+  to: '/settings',
+  icon: 'i-heroicons-cog-8-tooth',
+  children: [{
+    label: 'General',
+    to: '/settings',
+    exact: true
+  }, {
+    label: 'Members',
+    to: '/settings/members'
+  }, {
+    label: 'Notifications',
+    to: '/settings/notifications'
+  }],
+  tooltip: {
+    text: 'Settings',
+    shortcuts: ['G', 'S']
+  }
+}, {
+  id: 'Doc Tools',
+  label: 'Doc Tools',
   to: '/settings',
   icon: 'i-heroicons-cog-8-tooth',
   children: [{
@@ -85,8 +113,9 @@ const colors = computed(() => defaultColors.value.map(color => ({ ...color, acti
 </script>
 
 <template>
-  <UDashboardLayout>
-    <UDashboardPanel :width="250" :resizable="{ min: 200, max: 300 }" collapsible>
+  <button @click="toggleNavbar">Toggle Navbar</button>
+  <UDashboardLayout style="margin-top: 25px;">
+    <UDashboardPanel v-if="isNavbarVisible" :width="250" :resizable="{ min: 200, max: 300 }" collapsible>
       <UDashboardNavbar class="!border-transparent" :ui="{ left: 'flex-1' }">
         <template #left>
           <TeamsDropdown />
