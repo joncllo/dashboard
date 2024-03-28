@@ -57,27 +57,29 @@ const links = [{
   }],
   tooltip: {
     text: 'Settings',
-    shortcuts: ['G', 'S']
+    shortcuts: ['S']
   }
-}, {
+}]
+
+const doccontent = [{
   id: 'Doc Tools',
   label: 'Doc Tools',
-  to: '/settings',
+  to: '/doctools',
   icon: 'i-heroicons-cog-8-tooth',
   children: [{
-    label: 'General',
-    to: '/settings',
+    label: 'Doc Heading',
+    to: '/doctools',
     exact: true
   }, {
-    label: 'Members',
-    to: '/settings/members'
+    label: 'Terms',
+    to: '/doctools/terms'
   }, {
-    label: 'Notifications',
-    to: '/settings/notifications'
+    label: 'Warranties',
+    to: '/doctools/warranties'
   }],
   tooltip: {
-    text: 'Settings',
-    shortcuts: ['G', 'S']
+    text: 'Doc Tools',
+    shortcuts: ['D']
   }
 }]
 
@@ -131,7 +133,12 @@ const colors = computed(() => defaultColors.value.map(color => ({ ...color, acti
 
         <UDivider />
 
+        <UDashboardSidebarLinks :links="doccontent" />
+
+        <UDivider />
+
         <UDashboardSidebarLinks :links="[{ label: 'Colors', draggable: true, children: colors }]" @update:links="colors => defaultColors = colors" />
+
 
         <div class="flex-1" />
 
